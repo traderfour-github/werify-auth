@@ -1,0 +1,149 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Auth Service v1",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/v1": {},
+        "/request-otp": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "request new OTP",
+                "description": "request otp for login",
+                "operationId": "44b5b0bc0f8296edbe65ee3f411b237a",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "identifier": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "identifier": "a@a.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK!",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "success": {
+                                        "summary": "An result object.",
+                                        "value": [
+                                            {
+                                                "type": "otp",
+                                                "hash": "599015a1-8297-46bd-9b1c-36b17219a670",
+                                                "id": "37ca5e8f-8055-4f01-9e1f-26c92c4d1311",
+                                                "created_at": "2023-04-03T12:13:15.000000Z"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Identifier not found."
+                    }
+                }
+            }
+        },
+        "/verify-otp": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "verify OTP",
+                "description": "login with otp, requires to get an otp first",
+                "operationId": "1d62ddc0a0eabed9d54026e62a541c7b",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "hash": {
+                                        "type": "string"
+                                    },
+                                    "otp": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "hash": "2838708a-bc8a-41f4-a59e-7f10d7def2a0",
+                                    "otp": "643315",
+                                    "id": "da34bd2d-9cb7-468c-b3a0-e407a9673a41"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK!",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "success": {
+                                        "summary": "An result object.",
+                                        "value": [
+                                            {
+                                                "succeed": true,
+                                                "results": {
+                                                    "first_name": "John",
+                                                    "middle_name": "",
+                                                    "last_name": "Doe",
+                                                    "email": null,
+                                                    "mobile": null,
+                                                    "phone_numbers": [
+                                                        {
+                                                            "mobile_number": "0912",
+                                                            "is_verified": 0,
+                                                            "created_at": "2023-03-19T20:38:13.000000Z"
+                                                        },
+                                                        {
+                                                            "mobile_number": "0912",
+                                                            "is_verified": 0,
+                                                            "created_at": "2023-03-20T12:33:50.000000Z"
+                                                        }
+                                                    ],
+                                                    "language": null,
+                                                    "timezone": null,
+                                                    "currency": null,
+                                                    "last_connection": null,
+                                                    "private": null,
+                                                    "avatar": null,
+                                                    "access_token": "token_here",
+                                                    "token_type": "bearer"
+                                                },
+                                                "metas": []
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "invalid otp/id/hash."
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Models\{{model}};
+use App\Repositories\Contracts\BaseRepository;
+use App\Repositories\Contracts\{{interface}};
+
+/**
+ * Class {{name}}
+ *
+ * @package App\Repositories
+ */
+class {{name}} extends BaseRepository implements {{interface}}
+{
+    protected string $model = {{model}}::class;
+
+}

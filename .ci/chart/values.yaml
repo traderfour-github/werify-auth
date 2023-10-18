@@ -1,0 +1,36 @@
+name: "sample"
+replicaCount: 1
+
+ingressController: nginx
+
+service:
+  type: ClusterIP
+
+domainName: "auth-service.werify.net"
+
+tls:
+  enabled: false
+  secretName: auth-service-werify-net-tls
+
+image:
+  repository: "werify-{{ .Values.name }}-auth-service"
+  pullPolicy: Always
+  tag: latest
+
+app:
+  debug: "false"
+  env: local
+  key: super_secure_app_key
+  url: http://localhost:8080
+  jwt:
+    secret: super-secure-jwt-secret
+  db:
+    connection: "mysql"
+    database: "name"
+    host: "localhost"
+    port: "3306"
+    user: "doadmin"
+    pass: "super_secure_db_pass"
+
+resources: {}
+tolerations: {}
